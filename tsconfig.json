@@ -9,10 +9,11 @@
 		"rootDir": "src",
 		"outDir": "./lib",
 		"strict": true,
+		"moduleResolution": "node",
 		"esModuleInterop": true, // 允许export=导出，由import from 导入
 		"noImplicitThis": true, // 不允许不明确类型的this
 		"noImplicitAny": true, // 不允许隐式any类型
-		"removeComments": true, // 是否删除编译后的js注释
+		// "removeComments": true, // 是否删除编译后的js注释
 		"noFallthroughCasesInSwitch": true, // 检查switch语句包含正确的break
 		"noImplicitReturns": true, // 检查函数没有隐式的返回值
 		"noUnusedLocals": true, // 检查未使用的局部变量

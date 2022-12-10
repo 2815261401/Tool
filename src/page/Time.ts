@@ -19,11 +19,15 @@ export default class Time extends Date {
 		seconds?: number,
 		ms?: number
 	) {
-		if (value === void 0 && monthIndex === void 0) super();
-		else if (value !== void 0 && monthIndex === void 0) super(value);
-		else if (value !== void 0 && monthIndex !== void 0 && typeof value === 'number')
+		if (value === void 0 && monthIndex === void 0) {
+			super();
+		} else if (value !== void 0 && monthIndex === void 0) {
+			super(value);
+		} else if (value !== void 0 && monthIndex !== void 0 && typeof value === 'number') {
 			super(value, monthIndex, date || 0, hours || 0, minutes || 0, seconds || 0, ms || 0);
-		else super();
+		} else {
+			super();
+		}
 	}
 	/**
 	 * 获取当前日期是第几周
@@ -80,24 +84,35 @@ export default class Time extends Date {
 		[/y+/, /M+/, /d+/, /h+/, /H+/, /m+/, /s+/, /q+/, /w+/, /W+/].forEach((regexp, i) => {
 			(format.match(regexp) || []).forEach((matchStr: string) => {
 				let replace: string = '';
-				if (i === 0) replace = this.getFullYear().toString();
-				else if (i === 1) replace = (this.getMonth() + 1).toString();
-				else if (i === 2) replace = this.getDate().toString();
-				else if (i === 3) replace = this.getHours().toString();
-				else if (i === 4) replace = (this.getHours() % 12 || 12).toString();
-				else if (i === 5) replace = this.getMinutes().toString();
-				else if (i === 6) replace = this.getSeconds().toString();
-				else if (i === 7) replace = quarter[Math.floor((this.getMonth() + 3) / 3).toString()];
-				else if (i === 8) replace = week[this.getDay()];
-				else if (i === 9) replace = this.getWeek().toString();
-				if (i < 7)
+				if (i === 0) {
+					replace = this.getFullYear().toString();
+				} else if (i === 1) {
+					replace = (this.getMonth() + 1).toString();
+				} else if (i === 2) {
+					replace = this.getDate().toString();
+				} else if (i === 3) {
+					replace = this.getHours().toString();
+				} else if (i === 4) {
+					replace = (this.getHours() % 12 || 12).toString();
+				} else if (i === 5) {
+					replace = this.getMinutes().toString();
+				} else if (i === 6) {
+					replace = this.getSeconds().toString();
+				} else if (i === 7) {
+					replace = quarter[Math.floor((this.getMonth() + 3) / 3).toString()];
+				} else if (i === 8) {
+					replace = week[this.getDay()];
+				} else if (i === 9) {
+					replace = this.getWeek().toString();
+				}
+				if (i < 7) {
 					format = format.replace(
 						matchStr,
 						matchStr.length === 1 ? replace : replace.padStart(matchStr.length, '0')
 					);
-				else if (i === 7)
+				} else if (i === 7) {
 					format = format.replace(matchStr, matchStr.length >= 4 ? `第${replace}季度` : replace);
-				else if (i === 8)
+				} else if (i === 8) {
 					format = format.replace(
 						matchStr,
 						matchStr.length > 1
@@ -106,12 +121,15 @@ export default class Time extends Date {
 								: `周${replace}`
 							: replace
 					);
-				else if (i === 9)
+				} else if (i === 9) {
 					format = format.replace(matchStr, matchStr.length >= 3 ? `第${replace}周` : replace);
+				}
 			});
 		});
 
-		if (toDate) return new Time(format);
+		if (toDate) {
+			return new Time(format);
+		}
 		return format;
 	}
 	/**
@@ -144,7 +162,9 @@ export default class Time extends Date {
 	getDifference(date: string | Date | Time, format?: string) {
 		const time = new Time(date);
 		const difference = time.getTime() - this.getTime();
-		if (!format || difference <= 0) return difference <= 0 ? 0 : difference;
+		if (!format || difference <= 0) {
+			return difference <= 0 ? 0 : difference;
+		}
 		let differenceStr = format;
 		const second = /(d|h|m|s)+/.test(differenceStr) ? 1000 : difference + 1;
 		const minute = /(d|h|m)+/.test(differenceStr) ? 60 * second : difference + 1;
@@ -153,11 +173,15 @@ export default class Time extends Date {
 		[/d+/, /h+/, /m+/, /s+/].forEach((regexp, i) => {
 			(format.match(regexp) || []).forEach((matchStr: string) => {
 				let replace: string = '';
-				if (i === 0) replace = Math.floor(difference / data).toString();
-				else if (i === 1) replace = Math.floor((difference % data) / hour).toString();
-				else if (i === 2) replace = Math.floor(((difference % data) % hour) / minute).toString();
-				else if (i === 3)
+				if (i === 0) {
+					replace = Math.floor(difference / data).toString();
+				} else if (i === 1) {
+					replace = Math.floor((difference % data) / hour).toString();
+				} else if (i === 2) {
+					replace = Math.floor(((difference % data) % hour) / minute).toString();
+				} else if (i === 3) {
 					replace = Math.floor((((difference % data) % hour) % minute) / second).toString();
+				}
 				differenceStr = differenceStr.replace(
 					matchStr,
 					matchStr.length === 1 ? replace : replace.padStart(matchStr.length, '0')
